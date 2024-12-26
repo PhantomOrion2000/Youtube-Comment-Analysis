@@ -50,7 +50,7 @@ if video_url:
     else:
         try:
             # Fetch comments
-            fetcher = YouTubeDataFetcher("AIzaSyA0y8QjmOa_LngNsGbcEzkl6APXy2P1ZKQ", video_id)
+            fetcher = YouTubeDataFetcher("ctyrytrty", video_id)
             comments_data = fetcher.fetch_comments()
             comments = pd.DataFrame(comments_data)
 

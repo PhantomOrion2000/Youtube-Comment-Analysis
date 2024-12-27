@@ -7,15 +7,6 @@ class Visualizer:
   def __init__(self, comments):
     self.comments = comments
 
-  def plot_sentiment_distribution(self):
-    sentiment_count = self.comments['sentiment'].value_counts()
-
-    plt.figure(figsize=(8,6))
-    sentiment_count.plot(kind = 'pie', autopct= "%1.1f%%", color = ['green', 'red', 'blue'])
-    plt.title("Sentiment Distribution")
-    plt.show()
-
-
   def generate_word_cloud(self):
     # Generate text for word clouds
     positive_text = " ".join(self.comments[self.comments['sentiment'] == 1]['cleaned_text'])
@@ -52,6 +43,39 @@ class Visualizer:
         st.markdown(f"- {top_comment['text']} (Score: {top_comment['compound_score']:.2f})")
       else:
         st.markdown(f"**{label}:** No comments found for this sentiment.")
+  
+  
+  def plot_sentiment_pie_chart(self):
+    """
+    Plots sentiment distribution as a pie chart.
+    Assumes 'sentiment' column is present in the data.
+    Sentiments are represented as:
+    1: Positive
+    -1: Negative
+    0: Neutral
+    """
+    # Count the number of each sentiment
+    sentiment_counts = self.comments['sentiment'].value_counts()
+
+    # Define labels and colors
+    labels = ['Positive', 'Negative', 'Neutral']
+    colors = ['green', 'red', 'blue']
+
+    # Ensure all sentiments are represented in the chart, even if count is 0
+    sentiment_values = [sentiment_counts.get(1, 0), sentiment_counts.get(-1, 0), sentiment_counts.get(0, 0)]
+
+    # Plot the pie chart
+    fig, ax = plt.subplots(figsize=(3,3))
+    ax.pie(
+        sentiment_values,
+        labels=labels,
+        colors=colors,
+        autopct='%1.1f%%',
+        startangle=90,
+        textprops={'fontsize': 6}
+    )
+    fig.tight_layout()
+    return fig
   
   def plot_sentiment_over_time(self):
     """
@@ -121,7 +145,7 @@ class Visualizer:
 
     # Adjust layout to prevent overlap
     fig.tight_layout()
-    st.pyplot(fig)
+    return fig
 
     # Save the plot as an image (optional)
     # fig.savefig('sentiment_over_time.png', dpi=300)

@@ -20,6 +20,8 @@ from youtube_data_fetcher import YouTubeDataFetcher
 from preprocessor import Preprocessor
 from analyzer import SentimentAnalyzer
 from visualizer import Visualizer
+from dotenv import load_dotenv
+import os
 import pandas as pd
 
 # Streamlit configuration
@@ -30,7 +32,7 @@ st.title("🎥 YouTube Comment Analyzer")
 
 # Input section
 video_url = st.text_input("Paste YouTube Video Link", placeholder="https://www.youtube.com/watch?v=...")
-# api_key = st.secrets["API_KEY"]  # Use Streamlit secrets for API keys
+api_key = os.getenv("YOUTUBE_API_KEY") # Use Streamlit secrets for API keys
 analyze_button = st.button("Analyze Comment")
 
 # Extract Video ID from URL
@@ -50,7 +52,7 @@ if video_url:
     else:
         try:
             # Fetch comments
-            fetcher = YouTubeDataFetcher("ctyrytrty", video_id)
+            fetcher = YouTubeDataFetcher(api_key, video_id)
             comments_data = fetcher.fetch_comments()
             comments = pd.DataFrame(comments_data)
 
@@ -66,9 +68,27 @@ if video_url:
             visualizer = Visualizer(analyzed_comments)
 
             st.subheader("📊 Sentiment Insights")
-            # Sentiment distribution
-            st.write("#### Sentiment Distribution Over Time")
-            visualizer.plot_sentiment_over_time()
+            # # Sentiment distribution
+            # st.write("### Sentiment Distribution")
+            # visualizer.plot_sentiment_pie_chart()
+            
+            # st.write("#### Sentiment Distribution Over Time")
+            # visualizer.plot_sentiment_over_time()
+
+            with st.container():
+                col1, col2 = st.columns([1,1])
+
+                # Pie Chart
+                with col1:
+                    st.write("#### Sentiment Distribution")
+                    fig1 = visualizer.plot_sentiment_pie_chart()
+                    st.pyplot(fig1)
+
+                # Line Chart
+                with col2:
+                    st.write("#### Sentiment Over Time")
+                    fig2 = visualizer.plot_sentiment_over_time()
+                    st.pyplot(fig2)
 
             # Top comments
             st.write("#### Top Positive, Neutral, and Negative Comments")

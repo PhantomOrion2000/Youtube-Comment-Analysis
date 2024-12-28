@@ -30,7 +30,7 @@ This project focuses on analyzing YouTube video comments to extract meaningful i
 
 ## ⚙️ Tools & Technologies
 - **Languages**: Python
-- **Libraries**: Pandas, Matplotlib, Seaborn, Wordcloud, Google-API-Python-Client
+- **Libraries**: Pandas, Matplotlib, nltk,  Wordcloud, streamlit
 - **APIs**: YouTube Data API for fetching video comments
 
 ---
@@ -42,14 +42,14 @@ This project focuses on analyzing YouTube video comments to extract meaningful i
 
 ---
 
+## Usage
+- **Open the application in your browser (Streamlit will provide a URL after running).
+- **Paste the YouTube video link in the input field.
+- **Click the Analyze Comment button.
+
+---
+
 ## 🧠 Analysis and Visualizations
 - **Sentiment Trends**: Visualize sentiment distribution over time.
 - **Word Clouds**: Generate word clouds for positive, neutral, and negative comments.
 - **Top Comments**: Display the most impactful comments sorted by sentiment intensity.
-
----
-
-## 🖥️ How to Run Locally
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/Youtube-Comment-Analysis.git

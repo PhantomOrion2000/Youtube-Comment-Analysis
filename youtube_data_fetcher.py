@@ -66,9 +66,6 @@ class YouTubeDataFetcher:
           print(f"Failed to fetch comments: {response.status_code}")
           print(response.json())
 
-# fetcher = YouTubeDataFetcher('AIzaSyA0y8QjmOa_LngNsGbcEzkl6APXy2P1ZKQ', 'c6D-KTdi5cs')
-# print( fetcher.fetch_comments())
-
 
 
 
